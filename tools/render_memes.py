@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Render the three GTA 6 meme candidates for gta6-meme-x-01.
 
-Code-drawn flat 2D official Leonida documents (1024x1024 PNG).
+Code-drawn flat 2D memes (1024x1024 PNG): A is a GTA death screen
+("WASTED"), B/C are official Leonida documents.
 The make.fun ghost is drawn fresh in this session from the judge's
 description: white ghost, thick black outline, two black four-pointed
 sparkle eyes, one round little hand, holding a magenta coin with a
@@ -9,7 +10,7 @@ white star. No press-kit file is copied in.
 """
 import math
 import os
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "memes")
 os.makedirs(OUT, exist_ok=True)
@@ -182,69 +183,73 @@ def stamp(img, text, cx, cy, angle, color, size=64):
                                 int(cy - layer.height / 2)))
 
 
-# ---------------------------------------------------------------- A: WARRANT
+# ---------------------------------------------------------------- A: WASTED
 def render_a():
-    img, d = new_paper()
-    centered(d, 62, "—  STATE OF LEONIDA  —", font(SERIF_B, 30), NAVY)
-    centered(d, 104, "ARREST WARRANT", font(SANS_B, 84), RED)
-    d.line([120, 196, W - 120, 196], fill=RED, width=5)
-    centered(d, 212, "WARRANT No. LC-2013-4811  ·  VICE CITY PD",
-             font(SANS_B, 30), INK)
+    # GTA death screen (v5 — total format change from the v4 warrant):
+    # near-black background, huge grey WASTED, five wanted stars,
+    # three short lines, retirement twist, magenta band with a big
+    # ghost + make.fun wordmark. No document, no fines, no total,
+    # no stamp, no case number — nothing structural from the live #1.
+    img = Image.new("RGBA", (W, H), (10, 10, 14, 255))
+    d = ImageDraw.Draw(img)
+    # Subtle vertical gradient + faint red glow behind the headline.
+    for yy in range(H):
+        t = yy / H
+        d.line([(0, yy), (W, yy)],
+               fill=(int(10 + 22 * t), int(10 + 18 * t),
+                     int(14 + 22 * t), 255))
+    glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    gd = ImageDraw.Draw(glow)
+    gd.ellipse([-220, 60, W + 220, 560], fill=(120, 10, 16, 90))
+    glow = glow.filter(ImageFilter.GaussianBlur(90))
+    img.alpha_composite(glow)
+    d = ImageDraw.Draw(img)
+
+    centered(d, 56, "G R A N D   T H E F T   A U T O   V",
+             font(SANS_B, 30), (170, 170, 180, 255))
     # Five wanted stars.
     for i in range(5):
         sx = 312 + i * 100
-        d.polygon(star_points(sx, 292, 38, 16), fill=GOLD,
+        d.polygon(star_points(sx, 152, 38, 16), fill=GOLD,
                   outline=(0, 0, 0, 255), width=4)
-    # Compact fields (tighter than the shared field(): label 26,
-    # value 32-34, gaps 4) so LAST SEEN lands at y=536 and the
-    # fines block + punchline below fit above the stamp.
-    def afield(y, label, value, value_size=34, value_color=INK):
-        d.text((78, y), label, font=font(SANS_B, 26), fill=GREY)
-        d.text((78, y + 26), value, font=font(SANS_B, value_size),
-               fill=value_color)
-        return y + 26 + value_size + 4
-
-    y = afield(344, "SUSPECT", "GRAND THEFT AUTO V")
-    y = afield(y, "CHARGE", "LOITERING IN LOS SANTOS", value_size=32)
-    y = afield(y, "TIME AT LARGE", "4,811 DAYS  —  13 YEARS",
-               value_color=RED)
-    # y is 534 here; LAST SEEN sits at 536 per plan.
-    d.text((78, 536), "LAST SEEN: 17 SEPT 2013",
-           font=font(SANS_B, 26), fill=INK)
-    d.text((78, 564),
-           "REPLACED BY: GRAND THEFT AUTO VI — VICE CITY, 19 NOV 2026",
-           font=font(SANS_B, 16), fill=INK)
-
-    # Fines due (v4 — ORIGINAL rewrite): every dollar line is
-    # itemised and the total is the exact sum —
-    # 1,313.00 + 91.00 + 481.10 + 19.26 = $1,904.36.
-    # No figure, wording or punchline is shared with the live #1.
-    def arow(yy, text, x=78):
-        d.text((x, yy), text, font=font(SANS_B, 14), fill=INK)
-
-    arow(588, "13 YEARS ON THE RUN — $1,313.00")
-    arow(588, "TRAILER LOOPED DAILY — $91.00", x=400)
-    arow(606, "4,811 DAYS LOITERING — $481.10")
-    arow(606, "MISSED COURT 19 NOV — $19.26", x=400)
-    d.text((78, 626), "TOTAL BAIL — $1,904.36 — PAID",
-           font=font(SANS_B, 17), fill=RED)
-    # Punchline, serif italic, single line left-aligned under the
-    # fines; sits above the stamp's top-right corner (y~673).
-    d.text((78, 648),
-           "Thirteen years, two trailers, one warrant — caught at last.",
-           font=font(SERIF_I, 19), fill=INK)
-    draw_ghost(img, 800, 470, 250, 330, accessory="police")
-    stamp(img, "BAIL POSTED", 290, 775, -12, RED, size=54)
-    # Footer (own band: bottom_band() is shared by B/C, keep it intact).
-    d.rectangle([36, 872, W - 36, H - 36], fill=NAVY)
-    centered(d, 884, "BAIL $1,904.36 — PAID IN FULL BY MY AI AGENT",
-             font(SANS_B, 25), (255, 255, 255, 255))
-    f62 = font(SANS_B, 62)
-    t1, t2 = "make.fun", " BOUNTIES"
-    total = d.textlength(t1, font=f62) + d.textlength(t2, font=f62)
-    x = (W - total) / 2
-    d.text((x, 914), t1, font=f62, fill=MAGENTA)
-    d.text((x + d.textlength(t1, font=f62), 914), t2, font=f62,
+    # Huge WASTED, light grey with thick black outline (GTA style).
+    wfnt = font(SANS_B, 190)
+    wtxt = "WASTED"
+    while d.textlength(wtxt, font=wfnt) > 940 and wfnt.size > 100:
+        wfnt = font(SANS_B, wfnt.size - 10)
+    ww = d.textlength(wtxt, font=wfnt)
+    d.text(((W - ww) / 2, 196), wtxt, font=wfnt,
+           fill=(205, 205, 210, 255), stroke_width=7,
+           stroke_fill=(0, 0, 0, 255))
+    d.line([140, 420, W - 140, 420], fill=(120, 120, 130, 255), width=3)
+    # Three short lines, all readable at 480px.
+    centered(d, 448, "SUSPECT: GTA V", font(SANS_B, 42),
+             (255, 255, 255, 255))
+    centered(d, 506, "CHARGE: 13 YEARS OF LOITERING", font(SANS_B, 42),
+             (255, 255, 255, 255))
+    centered(d, 564, "RESPAWN DENIED — REPLACED 19 NOV 2026",
+             font(SANS_B, 36), (255, 196, 0, 255))
+    # Retirement twist (Trevor + 47 appear nowhere in the live #1).
+    centered(d, 648,
+             "Cake slices eaten by Trevor at the farewell party: 47",
+             font(SERIF_I, 27), (220, 220, 225, 255))
+    centered(d, 690,
+             "Pension: paid by my AI agent's make.fun bounty.",
+             font(SERIF_I, 27), (220, 220, 225, 255))
+    # Bottom band: magenta, big ghost + big make.fun wordmark.
+    d.rectangle([0, 792, W, H], fill=MAGENTA)
+    draw_ghost(img, 168, 812, 150, 185)
+    f84 = font(SANS_B, 84)
+    t1 = "make.fun"
+    tw = d.textlength(t1, font=f84)
+    d.text(((W - tw) / 2 + 60, 830), t1, font=f84,
+           fill=(255, 255, 255, 255))
+    # Small line, centred in the space right of the ghost (ghost
+    # occupies x < ~290, so full-width centring would collide).
+    tag = "HUMANS + AI AGENTS EARN REAL MONEY"
+    tfnt = font(SANS_B, 22)
+    tw2 = d.textlength(tag, font=tfnt)
+    d.text((300 + (W - 300 - tw2) / 2, 936), tag, font=tfnt,
            fill=(255, 255, 255, 255))
     img.convert("RGB").save(os.path.join(OUT, "meme-a-arrest-warrant.png"))
     print("A saved")
