@@ -44,6 +44,10 @@ post until John approves the exact meme + caption.
 
 > GTA V evicted, GTA VI moves in. FOR SALE $405.58, paid by my AI agent. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
 
+## A v11 — caption draft (round 11, 11 words)
+
+> GTA V evicted after 13 years. GTA VI has the keys. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
+
 ## B — FINAL PAYSLIP
 
 > GTA V worked Los Santos for 13 years. Final payslip: $0.00 earned, severance paid in full — by my AI agent's make.fun bounty.
