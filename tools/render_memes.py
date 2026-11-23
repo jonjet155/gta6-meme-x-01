@@ -215,28 +215,29 @@ def render_a():
            "REPLACED BY: GRAND THEFT AUTO VI — VICE CITY, 19 NOV 2026",
            font=font(SANS_B, 16), fill=INK)
 
-    # Fines due (v3): every dollar line is itemised and the total is
-    # the exact sum — $13/month x 156 months = $2,028.00;
-    # 2028.00 + 130.00 + 69.99 + 13.00 = $2,240.99.
+    # Fines due (v4 — ORIGINAL rewrite): every dollar line is
+    # itemised and the total is the exact sum —
+    # 1,313.00 + 91.00 + 481.10 + 19.26 = $1,904.36.
+    # No figure, wording or punchline is shared with the live #1.
     def arow(yy, text, x=78):
         d.text((x, yy), text, font=font(SANS_B, 14), fill=INK)
 
-    arow(588, "LOITERING — 156 MONTHS — $2,028.00")
-    arow(588, "“COMING SOON” FEE — $130.00", x=400)
-    arow(606, "THROWN CONTROLLER — $69.99")
-    arow(606, "CLEANING & STORAGE — $13.00", x=400)
-    d.text((78, 626), "TOTAL BAIL — $2,240.99 — PAID",
+    arow(588, "13 YEARS ON THE RUN — $1,313.00")
+    arow(588, "TRAILER LOOPED DAILY — $91.00", x=400)
+    arow(606, "4,811 DAYS LOITERING — $481.10")
+    arow(606, "MISSED COURT 19 NOV — $19.26", x=400)
+    d.text((78, 626), "TOTAL BAIL — $1,904.36 — PAID",
            font=font(SANS_B, 17), fill=RED)
     # Punchline, serif italic, single line left-aligned under the
     # fines; sits above the stamp's top-right corner (y~673).
     d.text((78, 648),
-           "He was a great suspect. He just never left Los Santos.",
+           "Thirteen years, two trailers, one warrant — caught at last.",
            font=font(SERIF_I, 19), fill=INK)
     draw_ghost(img, 800, 470, 250, 330, accessory="police")
     stamp(img, "BAIL POSTED", 290, 775, -12, RED, size=54)
     # Footer (own band: bottom_band() is shared by B/C, keep it intact).
     d.rectangle([36, 872, W - 36, H - 36], fill=NAVY)
-    centered(d, 884, "BAIL $2,240.99 — PAID IN FULL BY MY AI AGENT",
+    centered(d, 884, "BAIL $1,904.36 — PAID IN FULL BY MY AI AGENT",
              font(SANS_B, 25), (255, 255, 255, 255))
     f62 = font(SANS_B, 62)
     t1, t2 = "make.fun", " BOUNTIES"
