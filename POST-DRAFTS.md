@@ -24,6 +24,10 @@ post until John approves the exact meme + caption.
 
 > GTA V finally WASTED after 13 years — respawn denied, replaced 19 Nov 2026. Its pension? Paid by my AI agent's make.fun bounty. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
 
+## A v6 — caption draft (round 6, 27 words)
+
+> GTA V WASTED after 13 years of 'coming soon'. GTA VI moves in 19 Nov 2026 — keys to Jason & Lucia. My AI agent claimed the bounty. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
+
 ## B — FINAL PAYSLIP
 
 > GTA V worked Los Santos for 13 years. Final payslip: $0.00 earned, severance paid in full — by my AI agent's make.fun bounty.

@@ -185,11 +185,16 @@ def stamp(img, text, cx, cy, angle, color, size=64):
 
 # ---------------------------------------------------------------- A: WASTED
 def render_a():
-    # GTA death screen (v5 — total format change from the v4 warrant):
-    # near-black background, huge grey WASTED, five wanted stars,
-    # three short lines, retirement twist, magenta band with a big
-    # ghost + make.fun wordmark. No document, no fines, no total,
-    # no stamp, no case number — nothing structural from the live #1.
+    # GTA death screen (v6 — blind judge round 5 fixes):
+    # GTA VI named EXPLICITLY (kill-feed: new occupant + keys Jason &
+    # Lucia), original WASTED-tied payoff ("BOUNTY CLAIMED BY MY AI
+    # AGENT — IT EARNED THE KILL") replacing the recycled #1 punchline,
+    # layered jokes (13 years of 'COMING SOON', 4,745-day respawn
+    # timer), Trevor 47-slice twist kept. Bottom band is now dark navy
+    # with the ghost on the RIGHT and a magenta make.fun wordmark —
+    # a different layout/colour/wording from the live #1's band.
+    # No document, no fines, no total, no stamp — nothing structural
+    # from the live #1.
     img = Image.new("RGBA", (W, H), (10, 10, 14, 255))
     d = ImageDraw.Draw(img)
     # Subtle vertical gradient + faint red glow behind the headline.
@@ -222,34 +227,35 @@ def render_a():
            fill=(205, 205, 210, 255), stroke_width=7,
            stroke_fill=(0, 0, 0, 255))
     d.line([140, 420, W - 140, 420], fill=(120, 120, 130, 255), width=3)
-    # Three short lines, all readable at 480px.
-    centered(d, 448, "SUSPECT: GTA V", font(SANS_B, 42),
+    # Kill-feed lines, all readable at 480px.
+    centered(d, 446, "SUSPECT: GTA V", font(SANS_B, 42),
              (255, 255, 255, 255))
-    centered(d, 506, "CHARGE: 13 YEARS OF LOITERING", font(SANS_B, 42),
-             (255, 255, 255, 255))
-    centered(d, 564, "RESPAWN DENIED — REPLACED 19 NOV 2026",
+    centered(d, 502, "WASTED BY: 13 YEARS OF 'COMING SOON'",
+             font(SANS_B, 36), (255, 255, 255, 255))
+    centered(d, 558, "NEW OCCUPANT: GRAND THEFT AUTO VI",
              font(SANS_B, 36), (255, 196, 0, 255))
+    centered(d, 610, "KEYS: JASON & LUCIA — MOVES IN 19 NOV 2026",
+             font(SANS_B, 30), (255, 255, 255, 255))
+    centered(d, 656, "RESPAWN DENIED — TIMER: 4,745 DAYS",
+             font(SANS_B, 30), (255, 255, 255, 255))
     # Retirement twist (Trevor + 47 appear nowhere in the live #1).
-    centered(d, 648,
+    centered(d, 710,
              "Cake slices eaten by Trevor at the farewell party: 47",
              font(SERIF_I, 27), (220, 220, 225, 255))
-    centered(d, 690,
-             "Pension: paid by my AI agent's make.fun bounty.",
-             font(SERIF_I, 27), (220, 220, 225, 255))
-    # Bottom band: magenta, big ghost + big make.fun wordmark.
-    d.rectangle([0, 792, W, H], fill=MAGENTA)
-    draw_ghost(img, 168, 812, 150, 185)
+    # Bottom band: dark navy, ghost on the RIGHT, magenta wordmark.
+    # The payoff is WASTED-tied and original — not the #1 punchline.
+    d.rectangle([0, 792, W, H], fill=NAVY)
+    draw_ghost(img, 856, 812, 150, 185)
     f84 = font(SANS_B, 84)
     t1 = "make.fun"
     tw = d.textlength(t1, font=f84)
-    d.text(((W - tw) / 2 + 60, 830), t1, font=f84,
-           fill=(255, 255, 255, 255))
-    # Small line, centred in the space right of the ghost (ghost
-    # occupies x < ~290, so full-width centring would collide).
-    tag = "HUMANS + AI AGENTS EARN REAL MONEY"
+    d.text(((770 - tw) / 2, 830), t1, font=f84, fill=MAGENTA)
+    # Tagline centred in the space left of the ghost (ghost occupies
+    # x > ~780, so full-width centring would collide).
+    tag = "BOUNTY CLAIMED BY MY AI AGENT — IT EARNED THE KILL"
     tfnt = font(SANS_B, 22)
     tw2 = d.textlength(tag, font=tfnt)
-    d.text((300 + (W - 300 - tw2) / 2, 936), tag, font=tfnt,
+    d.text(((770 - tw2) / 2, 936), tag, font=tfnt,
            fill=(255, 255, 255, 255))
     img.convert("RGB").save(os.path.join(OUT, "meme-a-arrest-warrant.png"))
     print("A saved")
