@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Render the three GTA 6 meme candidates for gta6-meme-x-01.
 
-Code-drawn flat 2D memes (1024x1024 PNG): A is a GTA death screen
-("WASTED"), B/C are official Leonida documents.
+Code-drawn flat 2D memes (1024x1024 PNG): A is a housewarming
+invitation (v8 — WASTED retired), B/C are official Leonida documents.
 The make.fun ghost is drawn fresh in this session from the judge's
 description: white ghost, thick black outline, two black four-pointed
 sparkle eyes, one round little hand, holding a magenta coin with a
@@ -133,6 +133,15 @@ def draw_ghost(base, cx, top, w, h, accessory=None):
         d.line([(hx, hy), (gx, gy - 12)], fill=(120, 72, 20, 255), width=10)
         d.rectangle([gx - 35, gy - 12, gx + 35, gy + 12],
                     fill=(150, 95, 30, 255), outline=(0, 0, 0, 255), width=4)
+    elif accessory == "party":
+        # Magenta party hat cone + gold pompom on the dome.
+        hx0, hy0 = cx - r * 0.48, top + r * 0.10
+        hx1 = cx + r * 0.48
+        apex = (cx, top - r * 0.62)
+        d.polygon([(hx0, hy0), (hx1, hy0), apex],
+                  fill=MAGENTA, outline=(0, 0, 0, 255), width=4)
+        d.ellipse([apex[0] - 11, apex[1] - 11, apex[0] + 11, apex[1] + 11],
+                  fill=GOLD, outline=(0, 0, 0, 255), width=4)
     base.alpha_composite(layer)
     return hx, hy
 
@@ -171,6 +180,18 @@ def bottom_band(d, line1, y=872):
            fill=MAGENTA)
 
 
+def stamp_small(img, text, cx, cy, angle, color, size=46, w=260, h=76):
+    layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    fnt = font(SANS_B, size)
+    tw = d.textlength(text, font=fnt)
+    d.rectangle([5, 5, w - 5, h - 5], outline=color, width=5)
+    d.text(((w - tw) / 2, (h - size) / 2 - 4), text, font=fnt, fill=color)
+    layer = layer.rotate(angle, expand=True, resample=Image.BICUBIC)
+    img.alpha_composite(layer, (int(cx - layer.width / 2),
+                                int(cy - layer.height / 2)))
+
+
 def stamp(img, text, cx, cy, angle, color, size=64):
     layer = Image.new("RGBA", (440, 130), (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
@@ -183,85 +204,73 @@ def stamp(img, text, cx, cy, angle, color, size=64):
                                 int(cy - layer.height / 2)))
 
 
-# ---------------------------------------------------------------- A: WASTED
+# ---------------------------------------------------------------- A: HOUSEWARMING (v8)
 def render_a():
-    # GTA death screen (v7 — blind judge round 6 fixes):
-    # + rap sheet (3 extra jokes, big uppercase, 2 lines), + LAST
-    # SEEN line (specificity), + "WANTED LEVEL SET BY MY AI AGENT"
-    # (originality — the agent sets the stars, not just pays),
-    # + real-money payoff in the footer ("KILL CREDIT: MY AI AGENT —
-    # PAID IN REAL MONEY WON ON make.fun"). Kept: WASTED format,
-    # GTA VI explicit, 13 years 'COMING SOON', 4,745-day respawn
-    # timer, Trevor 47-slice twist, navy band + ghost + magenta
-    # make.fun wordmark. No document, no fines, no total, no stamp.
-    img = Image.new("RGBA", (W, H), (10, 10, 14, 255))
-    d = ImageDraw.Draw(img)
-    # Subtle vertical gradient + faint red glow behind the headline.
-    for yy in range(H):
-        t = yy / H
-        d.line([(0, yy), (W, yy)],
-               fill=(int(10 + 22 * t), int(10 + 18 * t),
-                     int(14 + 22 * t), 255))
-    glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    gd = ImageDraw.Draw(glow)
-    gd.ellipse([-220, 60, W + 220, 560], fill=(120, 10, 16, 90))
-    glow = glow.filter(ImageFilter.GaussianBlur(90))
-    img.alpha_composite(glow)
-    d = ImageDraw.Draw(img)
+    # Housewarming invitation (v8 — blind judge round 8, fresh concept):
+    # WASTED is retired. Jason & Lucia host GTA VI's housewarming in
+    # Vice City; GTA V is the one guest NOT invited. The party tab is a
+    # real receipt integrated into the invitation — five fresh line
+    # items, new total $1,347.64, magenta PAID stamp. Closing twist:
+    # "You lived here 13 years. You were never on the list." Navy band
+    # keeps the ghost (now in a party hat) + big magenta make.fun
+    # wordmark + real-money payoff.
+    img, d = new_paper()
 
-    centered(d, 56, "G R A N D   T H E F T   A U T O   V",
-             font(SANS_B, 30), (170, 170, 180, 255))
-    # Five wanted stars.
-    for i in range(5):
-        sx = 312 + i * 100
-        d.polygon(star_points(sx, 152, 38, 16), fill=GOLD,
-                  outline=(0, 0, 0, 255), width=4)
-    # Huge WASTED, light grey with thick black outline (GTA style).
-    wfnt = font(SANS_B, 175)
-    wtxt = "WASTED"
-    while d.textlength(wtxt, font=wfnt) > 940 and wfnt.size > 100:
-        wfnt = font(SANS_B, wfnt.size - 10)
-    ww = d.textlength(wtxt, font=wfnt)
-    d.text(((W - ww) / 2, 196), wtxt, font=wfnt,
-           fill=(205, 205, 210, 255), stroke_width=7,
-           stroke_fill=(0, 0, 0, 255))
-    d.line([140, 388, W - 140, 388], fill=(120, 120, 130, 255), width=3)
-    # Kill-feed lines, all readable at 480px.
-    centered(d, 400, "SUSPECT: GTA V", font(SANS_B, 40),
-             (255, 255, 255, 255))
-    centered(d, 446, "LAST SEEN: VICE CITY — 17 SEP 2013",
-             font(SANS_B, 32), (255, 255, 255, 255))
-    centered(d, 484, "WASTED BY: 13 YEARS OF 'COMING SOON'",
-             font(SANS_B, 32), (255, 255, 255, 255))
-    centered(d, 522, "NEW OCCUPANT: GRAND THEFT AUTO VI",
-             font(SANS_B, 32), (255, 196, 0, 255))
-    centered(d, 560, "KEYS: JASON & LUCIA — MOVES IN 19 NOV 2026",
-             font(SANS_B, 28), (255, 255, 255, 255))
-    centered(d, 594, "RESPAWN DENIED — TIMER: 4,745 DAYS",
-             font(SANS_B, 28), (255, 255, 255, 255))
-    centered(d, 628, "WANTED LEVEL SET BY MY AI AGENT",
-             font(SANS_B, 28), (255, 196, 0, 255))
-    centered(d, 662, "CHARGES: 156 MONTHS SQUATTING • 214 GB HOARDED",
-             font(SANS_B, 26), (255, 255, 255, 255))
-    centered(d, 692, "1 CONTROLLER THROWN AT THE TV",
-             font(SANS_B, 26), (255, 255, 255, 255))
-    # Retirement twist (Trevor + 47 appear nowhere in the live #1).
-    centered(d, 724,
-             "Cake slices eaten by Trevor at the farewell party: 47",
-             font(SERIF_I, 25), (220, 220, 225, 255))
-    # Bottom band: dark navy, ghost on the RIGHT, magenta wordmark.
-    # The payoff is real-money and WASTED-tied — not the #1 punchline.
+    centered(d, 54, "JASON & LUCIA", font(SERIF_B, 38), NAVY)
+    centered(d, 98, "REQUEST THE PLEASURE OF YOUR COMPANY",
+             font(SANS_B, 21), GREY)
+    centered(d, 126, "HOUSEWARMING", font(SERIF_B, 92), NAVY)
+    d.line([120, 232, W - 120, 232], fill=NAVY, width=4)
+    centered(d, 246, "GRAND THEFT AUTO VI · VICE CITY, LEONIDA",
+             font(SANS_B, 29), INK)
+    centered(d, 282, "19 NOVEMBER 2026 · 7 PM", font(SANS_B, 27), INK)
+    centered(d, 322, "YOU'RE NOT INVITED, GTA V", font(SANS_B, 42), RED)
+    d.line([120, 382, W - 120, 382], fill=NAVY, width=4)
+
+    # The party tab — integrated receipt, fresh numbers.
+    d.text((78, 398), "THE PARTY TAB", font=font(SERIF_B, 30), fill=NAVY)
+    rows = [
+        ("MOVING VAN — 13 YEARS OF JUNK", "$412.75"),
+        ("CATERING — TACOS, VICE CITY", "$269.40"),
+        ("NEW CONSOLE — OLD ONE RETIRED", "$599.00"),
+        ("HOUSE KEYS — JASON & LUCIA", "$18.50"),
+        ("'COMING SOON' SIGN — REMOVED", "$47.99"),
+    ]
+    # 412.75 + 269.40 + 599.00 + 18.50 + 47.99 = 1,347.64
+    y = 448
+    lfnt, afnt = font(SANS_B, 23), font(SANS_B, 28)
+    for label, amount in rows:
+        d.text((78, y), label, font=lfnt, fill=INK)
+        aw = d.textlength(amount, font=afnt)
+        d.text((700 - aw, y - 2), amount, font=afnt, fill=INK)
+        # Dotted leader between label and amount.
+        lw = d.textlength(label, font=lfnt)
+        x0 = 78 + lw + 12
+        x1 = 700 - aw - 12
+        xx = x0
+        while xx < x1:
+            d.ellipse([xx, y + 14, xx + 4, y + 18], fill=(160, 150, 125, 255))
+            xx += 11
+        y += 42
+    d.line([78, 654, W - 78, 654], fill=NAVY, width=3)
+    d.text((78, 668), "TOTAL", font=font(SANS_B, 32), fill=NAVY)
+    tot = "$1,347.64"
+    tw = d.textlength(tot, font=font(SANS_B, 34))
+    d.text((700 - tw, 666), tot, font=font(SANS_B, 34), fill=RED)
+    stamp_small(img, "PAID", 850, 560, -12, MAGENTA, size=46)
+    # Closing twist.
+    centered(d, 736, "You lived here 13 years. You were never on the list.",
+             font(SERIF_I, 27), INK)
+    # Bottom band: navy, party-hat ghost on the right, magenta wordmark.
     d.rectangle([0, 792, W, H], fill=NAVY)
-    draw_ghost(img, 856, 812, 150, 185)
+    draw_ghost(img, 856, 820, 150, 180, accessory="party")
     f80 = font(SANS_B, 80)
     t1 = "make.fun"
     tw = d.textlength(t1, font=f80)
     d.text(((770 - tw) / 2, 824), t1, font=f80, fill=MAGENTA)
-    # Real-money payoff, two lines centred left of the ghost.
-    tag1 = "KILL CREDIT: MY AI AGENT"
-    tag2 = "PAID IN REAL MONEY WON ON make.fun"
     tfnt = font(SANS_B, 26)
-    for i, tag in enumerate((tag1, tag2)):
+    for i, tag in enumerate(("PARTY PAID BY MY AI AGENT",
+                            "WITH REAL MONEY WON ON make.fun")):
         tw2 = d.textlength(tag, font=tfnt)
         d.text(((770 - tw2) / 2, 916 + i * 32), tag, font=tfnt,
                fill=(255, 255, 255, 255))

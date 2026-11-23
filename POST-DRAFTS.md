@@ -32,6 +32,10 @@ post until John approves the exact meme + caption.
 
 > GTA V WASTED — last seen Vice City, 17 Sep 2013. Rap sheet: 156 months squatting, 214 GB hoarded. Kill credit paid in real money. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
 
+## A v8 — caption draft (round 8, 26 words)
+
+> GTA V wasn't invited to GTA VI's housewarming — Jason & Lucia moved in 19 Nov 2026. Tab $1,347.64, paid by my AI agent's make.fun bounty. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
+
 ## B — FINAL PAYSLIP
 
 > GTA V worked Los Santos for 13 years. Final payslip: $0.00 earned, severance paid in full — by my AI agent's make.fun bounty.
