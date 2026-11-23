@@ -36,6 +36,10 @@ post until John approves the exact meme + caption.
 
 > GTA V wasn't invited to GTA VI's housewarming — Jason & Lucia moved in 19 Nov 2026. Tab $1,347.64, paid by my AI agent's make.fun bounty. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
 
+## A v9 — caption draft (round 9, 24 words)
+
+> GTA V's console is FOR SALE — slightly haunted, 13 years of pizza boxes included. Price $548.84, paid by my AI agent's make.fun bounty. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
+
 ## B — FINAL PAYSLIP
 
 > GTA V worked Los Santos for 13 years. Final payslip: $0.00 earned, severance paid in full — by my AI agent's make.fun bounty.

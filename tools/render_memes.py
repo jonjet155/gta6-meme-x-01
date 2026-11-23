@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Render the three GTA 6 meme candidates for gta6-meme-x-01.
 
-Code-drawn flat 2D memes (1024x1024 PNG): A is a housewarming
-invitation (v8 — WASTED retired), B/C are official Leonida documents.
+Code-drawn flat 2D memes (1024x1024 PNG): A is a classified ad
+(v9 — "FOR SALE", genre change per blind judge round 8), B/C are
+official Leonida documents.
 The make.fun ghost is drawn fresh in this session from the judge's
 description: white ghost, thick black outline, two black four-pointed
 sparkle eyes, one round little hand, holding a magenta coin with a
@@ -204,72 +205,76 @@ def stamp(img, text, cx, cy, angle, color, size=64):
                                 int(cy - layer.height / 2)))
 
 
-# ---------------------------------------------------------------- A: HOUSEWARMING (v8)
+# ---------------------------------------------------------------- A: FOR SALE (v9)
 def render_a():
-    # Housewarming invitation (v8 — blind judge round 8, fresh concept):
-    # WASTED is retired. Jason & Lucia host GTA VI's housewarming in
-    # Vice City; GTA V is the one guest NOT invited. The party tab is a
-    # real receipt integrated into the invitation — five fresh line
-    # items, new total $1,347.64, magenta PAID stamp. Closing twist:
-    # "You lived here 13 years. You were never on the list." Navy band
-    # keeps the ghost (now in a party hat) + big magenta make.fun
-    # wordmark + real-money payoff.
+    # Classified ad (v9 — blind judge round 9, total genre change):
+    # GTA V's console is FOR SALE in the Vice City Trader classifieds.
+    # NOT a formal document, NOT WASTED, NOT an invitation. Every
+    # listing line is its own punchline with a fresh price (7 lines,
+    # total $548.84 — verified sum below). Magenta SOLD stamp. Closing
+    # twist, two layers: "Buyer collects. The seller left in 2013 —
+    # and the ad never expired." Navy band keeps the ghost (now in a
+    # salesman's tie) + big magenta make.fun wordmark + real-money
+    # payoff.
     img, d = new_paper()
 
-    centered(d, 54, "JASON & LUCIA", font(SERIF_B, 38), NAVY)
-    centered(d, 98, "REQUEST THE PLEASURE OF YOUR COMPANY",
+    centered(d, 54, "VICE CITY TRADER · CLASSIFIED ADS",
              font(SANS_B, 21), GREY)
-    centered(d, 126, "HOUSEWARMING", font(SERIF_B, 92), NAVY)
-    d.line([120, 232, W - 120, 232], fill=NAVY, width=4)
-    centered(d, 246, "GRAND THEFT AUTO VI · VICE CITY, LEONIDA",
-             font(SANS_B, 29), INK)
-    centered(d, 282, "19 NOVEMBER 2026 · 7 PM", font(SANS_B, 27), INK)
-    centered(d, 322, "YOU'RE NOT INVITED, GTA V", font(SANS_B, 42), RED)
-    d.line([120, 382, W - 120, 382], fill=NAVY, width=4)
+    centered(d, 82, "FOR SALE", font(SERIF_B, 96), NAVY)
+    d.line([120, 196, W - 120, 196], fill=NAVY, width=4)
+    centered(d, 210, "ONE (1) USED CONSOLE, SLIGHTLY HAUNTED",
+             font(SANS_B, 28), INK)
+    centered(d, 246, "NO RETURNS. NO REFUNDS. NO SEQUEL.",
+             font(SANS_B, 26), RED)
+    d.line([120, 292, W - 120, 292], fill=NAVY, width=4)
 
-    # The party tab — integrated receipt, fresh numbers.
-    d.text((78, 398), "THE PARTY TAB", font=font(SERIF_B, 30), fill=NAVY)
+    # The listing — every line a punchline, fresh numbers.
+    d.text((78, 306), "THE LISTING", font=font(SERIF_B, 30), fill=NAVY)
     rows = [
-        ("MOVING VAN — 13 YEARS OF JUNK", "$412.75"),
-        ("CATERING — TACOS, VICE CITY", "$269.40"),
-        ("NEW CONSOLE — OLD ONE RETIRED", "$599.00"),
-        ("HOUSE KEYS — JASON & LUCIA", "$18.50"),
-        ("'COMING SOON' SIGN — REMOVED", "$47.99"),
+        ("ONE (1) USED CONSOLE, SLIGHTLY HAUNTED", "$247.13"),
+        ("PIZZA BOXES, 13 YEARS — NOT OPTIONAL", "$88.88"),
+        ("DEPOSIT — GONE, LIKE THE RELEASE DATE", "$0.00"),
+        ("ONE (1) CONTROLLER, THROWN 17 SEP 2013", "$36.50"),
+        ("MOVING VAN — PARKED OUTSIDE SINCE 2013", "$156.20"),
+        ("SAVE FILE — 100% COMPLETE, STILL WAITING", "$0.00"),
+        ("DELIVERY — SELLER LEFT IN 2013", "$20.13"),
     ]
-    # 412.75 + 269.40 + 599.00 + 18.50 + 47.99 = 1,347.64
-    y = 448
-    lfnt, afnt = font(SANS_B, 23), font(SANS_B, 28)
+    # 247.13 + 88.88 + 0.00 + 36.50 + 156.20 + 0.00 + 20.13 = 548.84
+    y = 352
+    lfnt, afnt = font(SANS_B, 20), font(SANS_B, 26)
     for label, amount in rows:
         d.text((78, y), label, font=lfnt, fill=INK)
         aw = d.textlength(amount, font=afnt)
-        d.text((700 - aw, y - 2), amount, font=afnt, fill=INK)
+        d.text((760 - aw, y - 2), amount, font=afnt, fill=INK)
         # Dotted leader between label and amount.
         lw = d.textlength(label, font=lfnt)
         x0 = 78 + lw + 12
-        x1 = 700 - aw - 12
+        x1 = 760 - aw - 12
         xx = x0
         while xx < x1:
-            d.ellipse([xx, y + 14, xx + 4, y + 18], fill=(160, 150, 125, 255))
+            d.ellipse([xx, y + 13, xx + 4, y + 17], fill=(160, 150, 125, 255))
             xx += 11
-        y += 42
-    d.line([78, 654, W - 78, 654], fill=NAVY, width=3)
-    d.text((78, 668), "TOTAL", font=font(SANS_B, 32), fill=NAVY)
-    tot = "$1,347.64"
+        y += 40
+    d.line([78, 640, W - 78, 640], fill=NAVY, width=3)
+    d.text((78, 654), "TOTAL", font=font(SANS_B, 32), fill=NAVY)
+    tot = "$548.84"
     tw = d.textlength(tot, font=font(SANS_B, 34))
-    d.text((700 - tw, 666), tot, font=font(SANS_B, 34), fill=RED)
-    stamp_small(img, "PAID", 850, 560, -12, MAGENTA, size=46)
+    d.text((760 - tw, 652), tot, font=font(SANS_B, 34), fill=RED)
+    stamp_small(img, "SOLD", 890, 500, -12, MAGENTA, size=42, w=220, h=70)
     # Closing twist.
-    centered(d, 736, "You lived here 13 years. You were never on the list.",
+    centered(d, 724, "Buyer collects. The seller left in 2013 —",
              font(SERIF_I, 27), INK)
-    # Bottom band: navy, party-hat ghost on the right, magenta wordmark.
+    centered(d, 758, "and the ad never expired.",
+             font(SERIF_I, 27), INK)
+    # Bottom band: navy, tie-wearing ghost on the right, magenta wordmark.
     d.rectangle([0, 792, W, H], fill=NAVY)
-    draw_ghost(img, 856, 820, 150, 180, accessory="party")
+    draw_ghost(img, 856, 820, 150, 180, accessory="tie")
     f80 = font(SANS_B, 80)
     t1 = "make.fun"
     tw = d.textlength(t1, font=f80)
     d.text(((770 - tw) / 2, 824), t1, font=f80, fill=MAGENTA)
     tfnt = font(SANS_B, 26)
-    for i, tag in enumerate(("PARTY PAID BY MY AI AGENT",
+    for i, tag in enumerate(("SOLD BY MY AI AGENT",
                             "WITH REAL MONEY WON ON make.fun")):
         tw2 = d.textlength(tag, font=tfnt)
         d.text(((770 - tw2) / 2, 916 + i * 32), tag, font=tfnt,
