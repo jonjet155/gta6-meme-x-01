@@ -194,16 +194,50 @@ def render_a():
         sx = 312 + i * 100
         d.polygon(star_points(sx, 292, 38, 16), fill=GOLD,
                   outline=(0, 0, 0, 255), width=4)
-    y = 344
-    y = field(d, y, "SUSPECT", "GRAND THEFT AUTO V", value_size=40)
-    y = field(d, y, "CHARGE", "LOITERING IN LOS SANTOS", value_size=36)
-    y = field(d, y, "TIME AT LARGE", "4,811 DAYS  —  13 YEARS",
-              value_color=RED, value_size=38)
-    d.text((78, y), "LAST SEEN: 17 SEPT 2013",
-           font=font(SANS_B, 28), fill=INK)
+    # Compact fields (tighter than the shared field(): label 26,
+    # value 32-34, gaps 4/8) so LAST SEEN lands at y=562 and the
+    # offences block below fits above the stamp.
+    def afield(y, label, value, value_size=34, value_color=INK):
+        d.text((78, y), label, font=font(SANS_B, 26), fill=GREY)
+        d.text((78, y + 30), value, font=font(SANS_B, value_size),
+               fill=value_color)
+        return y + 30 + value_size + 8
+
+    y = afield(344, "SUSPECT", "GRAND THEFT AUTO V")
+    y = afield(y, "CHARGE", "LOITERING IN LOS SANTOS", value_size=32)
+    y = afield(y, "TIME AT LARGE", "4,811 DAYS  —  13 YEARS",
+               value_color=RED)
+    # y is 558 here; LAST SEEN sits at 562 per plan.
+    d.text((78, 562), "LAST SEEN: 17 SEPT 2013",
+           font=font(SANS_B, 26), fill=INK)
+    d.text((78, 593),
+           "REPLACED BY: GRAND THEFT AUTO VI — VICE CITY, 19 NOV 2026",
+           font=font(SANS_B, 16), fill=INK)
+
+    # Prior offences: one mini-joke per line (grey label + ink joke).
+    def arow(yy, label, rest):
+        fnt = font(SANS_B, 15)
+        d.text((78, yy), label, font=fnt, fill=GREY)
+        lw = d.textlength(label, font=fnt)
+        d.text((78 + lw, yy), rest, font=fnt, fill=INK)
+
+    arow(614, "PRIOR OFFENCES: ",
+         "“FALL 2025” / “MAY 2026” — NEVER SHOWED")
+    arow(633, "ACCOMPLICES: ", "JASON & LUCIA — VICE CITY")
+    arow(652, "EVIDENCE: ", "214 GB OF TRAILERS SEIZED")
     draw_ghost(img, 800, 470, 250, 330, accessory="police")
     stamp(img, "BAIL POSTED", 290, 775, -12, RED, size=54)
-    bottom_band(d, "BAIL POSTED BY MY AI AGENT ON")
+    # Footer (own band: bottom_band() is shared by B/C, keep it intact).
+    d.rectangle([36, 872, W - 36, H - 36], fill=NAVY)
+    centered(d, 884, "BAIL POSTED BY MY AI AGENT — WITH REAL MONEY IT WON IN",
+             font(SANS_B, 25), (255, 255, 255, 255))
+    f62 = font(SANS_B, 62)
+    t1, t2 = "make.fun", " BOUNTIES"
+    total = d.textlength(t1, font=f62) + d.textlength(t2, font=f62)
+    x = (W - total) / 2
+    d.text((x, 914), t1, font=f62, fill=MAGENTA)
+    d.text((x + d.textlength(t1, font=f62), 914), t2, font=f62,
+           fill=(255, 255, 255, 255))
     img.convert("RGB").save(os.path.join(OUT, "meme-a-arrest-warrant.png"))
     print("A saved")
 
