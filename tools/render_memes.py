@@ -2,7 +2,7 @@
 """Render the three GTA 6 meme candidates for gta6-meme-x-01.
 
 Code-drawn flat 2D memes (1024x1024 PNG): A is a classified ad
-(v9 — "FOR SALE", genre change per blind judge round 8), B/C are
+(v10 — "FOR SALE", genre change per blind judge round 8), B/C are
 official Leonida documents.
 The make.fun ghost is drawn fresh in this session from the judge's
 description: white ghost, thick black outline, two black four-pointed
@@ -207,15 +207,15 @@ def stamp(img, text, cx, cy, angle, color, size=64):
 
 # ---------------------------------------------------------------- A: FOR SALE (v9)
 def render_a():
-    # Classified ad (v9 — blind judge round 9, total genre change):
+    # Classified ad (v10 — blind judge round 10, new joke engine):
     # GTA V's console is FOR SALE in the Vice City Trader classifieds.
     # NOT a formal document, NOT WASTED, NOT an invitation. Every
-    # listing line is its own punchline with a fresh price (7 lines,
-    # total $548.84 — verified sum below). Magenta SOLD stamp. Closing
-    # twist, two layers: "Buyer collects. The seller left in 2013 —
-    # and the ad never expired." Navy band keeps the ghost (now in a
-    # salesman's tie) + big magenta make.fun wordmark + real-money
-    # payoff.
+    # listing line is its own punchline with a fresh price (6 lines,
+    # total $405.58 — verified sum below). The buyer is named: GTA VI,
+    # keys with Jason & Lucia. Magenta SOLD stamp. Closing twist:
+    # "The buyer moved in 13 years ago — now he's evicting the
+    # seller." Navy band keeps the ghost (now in a salesman's tie) +
+    # big magenta make.fun wordmark + real-money payoff.
     img, d = new_paper()
 
     centered(d, 54, "VICE CITY TRADER · CLASSIFIED ADS",
@@ -231,15 +231,14 @@ def render_a():
     # The listing — every line a punchline, fresh numbers.
     d.text((78, 306), "THE LISTING", font=font(SERIF_B, 30), fill=NAVY)
     rows = [
-        ("ONE (1) USED CONSOLE, SLIGHTLY HAUNTED", "$247.13"),
-        ("PIZZA BOXES, 13 YEARS — NOT OPTIONAL", "$88.88"),
-        ("DEPOSIT — GONE, LIKE THE RELEASE DATE", "$0.00"),
-        ("ONE (1) CONTROLLER, THROWN 17 SEP 2013", "$36.50"),
-        ("MOVING VAN — PARKED OUTSIDE SINCE 2013", "$156.20"),
-        ("SAVE FILE — 100% COMPLETE, STILL WAITING", "$0.00"),
-        ("DELIVERY — SELLER LEFT IN 2013", "$20.13"),
+        ("ONE (1) USED CONSOLE, SLIGHTLY HAUNTED", "$312.19"),
+        ("TRAILER VIEWS — 93M, STILL WAITING", "$0.00"),
+        ("RELEASE DATE — FALL '25, MAY '26, 19 NOV '26", "$0.00"),
+        ("BUYER: GTA VI — KEYS WITH JASON & LUCIA", "$19.26"),
+        ("EVICTION NOTICE — SERVED AFTER 13 YEARS", "$74.13"),
+        ("HAUNTING — INCLUDED, NO EXTRA CHARGE", "$0.00"),
     ]
-    # 247.13 + 88.88 + 0.00 + 36.50 + 156.20 + 0.00 + 20.13 = 548.84
+    # 312.19 + 0.00 + 0.00 + 19.26 + 74.13 + 0.00 = 405.58
     y = 352
     lfnt, afnt = font(SANS_B, 20), font(SANS_B, 26)
     for label, amount in rows:
@@ -257,14 +256,14 @@ def render_a():
         y += 40
     d.line([78, 640, W - 78, 640], fill=NAVY, width=3)
     d.text((78, 654), "TOTAL", font=font(SANS_B, 32), fill=NAVY)
-    tot = "$548.84"
+    tot = "$405.58"
     tw = d.textlength(tot, font=font(SANS_B, 34))
     d.text((760 - tw, 652), tot, font=font(SANS_B, 34), fill=RED)
     stamp_small(img, "SOLD", 890, 500, -12, MAGENTA, size=42, w=220, h=70)
     # Closing twist.
-    centered(d, 724, "Buyer collects. The seller left in 2013 —",
+    centered(d, 724, "The buyer moved in 13 years ago —",
              font(SERIF_I, 27), INK)
-    centered(d, 758, "and the ad never expired.",
+    centered(d, 758, "now he's evicting the seller.",
              font(SERIF_I, 27), INK)
     # Bottom band: navy, tie-wearing ghost on the right, magenta wordmark.
     d.rectangle([0, 792, W, H], fill=NAVY)

@@ -40,6 +40,10 @@ post until John approves the exact meme + caption.
 
 > GTA V's console is FOR SALE — slightly haunted, 13 years of pizza boxes included. Price $548.84, paid by my AI agent's make.fun bounty. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
 
+## A v10 — caption draft (round 10, 15 words)
+
+> GTA V evicted, GTA VI moves in. FOR SALE $405.58, paid by my AI agent. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
+
 ## B — FINAL PAYSLIP
 
 > GTA V worked Los Santos for 13 years. Final payslip: $0.00 earned, severance paid in full — by my AI agent's make.fun bounty.
