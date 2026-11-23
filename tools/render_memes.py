@@ -185,16 +185,15 @@ def stamp(img, text, cx, cy, angle, color, size=64):
 
 # ---------------------------------------------------------------- A: WASTED
 def render_a():
-    # GTA death screen (v6 — blind judge round 5 fixes):
-    # GTA VI named EXPLICITLY (kill-feed: new occupant + keys Jason &
-    # Lucia), original WASTED-tied payoff ("BOUNTY CLAIMED BY MY AI
-    # AGENT — IT EARNED THE KILL") replacing the recycled #1 punchline,
-    # layered jokes (13 years of 'COMING SOON', 4,745-day respawn
-    # timer), Trevor 47-slice twist kept. Bottom band is now dark navy
-    # with the ghost on the RIGHT and a magenta make.fun wordmark —
-    # a different layout/colour/wording from the live #1's band.
-    # No document, no fines, no total, no stamp — nothing structural
-    # from the live #1.
+    # GTA death screen (v7 — blind judge round 6 fixes):
+    # + rap sheet (3 extra jokes, big uppercase, 2 lines), + LAST
+    # SEEN line (specificity), + "WANTED LEVEL SET BY MY AI AGENT"
+    # (originality — the agent sets the stars, not just pays),
+    # + real-money payoff in the footer ("KILL CREDIT: MY AI AGENT —
+    # PAID IN REAL MONEY WON ON make.fun"). Kept: WASTED format,
+    # GTA VI explicit, 13 years 'COMING SOON', 4,745-day respawn
+    # timer, Trevor 47-slice twist, navy band + ghost + magenta
+    # make.fun wordmark. No document, no fines, no total, no stamp.
     img = Image.new("RGBA", (W, H), (10, 10, 14, 255))
     d = ImageDraw.Draw(img)
     # Subtle vertical gradient + faint red glow behind the headline.
@@ -218,7 +217,7 @@ def render_a():
         d.polygon(star_points(sx, 152, 38, 16), fill=GOLD,
                   outline=(0, 0, 0, 255), width=4)
     # Huge WASTED, light grey with thick black outline (GTA style).
-    wfnt = font(SANS_B, 190)
+    wfnt = font(SANS_B, 175)
     wtxt = "WASTED"
     while d.textlength(wtxt, font=wfnt) > 940 and wfnt.size > 100:
         wfnt = font(SANS_B, wfnt.size - 10)
@@ -226,37 +225,46 @@ def render_a():
     d.text(((W - ww) / 2, 196), wtxt, font=wfnt,
            fill=(205, 205, 210, 255), stroke_width=7,
            stroke_fill=(0, 0, 0, 255))
-    d.line([140, 420, W - 140, 420], fill=(120, 120, 130, 255), width=3)
+    d.line([140, 388, W - 140, 388], fill=(120, 120, 130, 255), width=3)
     # Kill-feed lines, all readable at 480px.
-    centered(d, 446, "SUSPECT: GTA V", font(SANS_B, 42),
+    centered(d, 400, "SUSPECT: GTA V", font(SANS_B, 40),
              (255, 255, 255, 255))
-    centered(d, 502, "WASTED BY: 13 YEARS OF 'COMING SOON'",
-             font(SANS_B, 36), (255, 255, 255, 255))
-    centered(d, 558, "NEW OCCUPANT: GRAND THEFT AUTO VI",
-             font(SANS_B, 36), (255, 196, 0, 255))
-    centered(d, 610, "KEYS: JASON & LUCIA — MOVES IN 19 NOV 2026",
-             font(SANS_B, 30), (255, 255, 255, 255))
-    centered(d, 656, "RESPAWN DENIED — TIMER: 4,745 DAYS",
-             font(SANS_B, 30), (255, 255, 255, 255))
+    centered(d, 446, "LAST SEEN: VICE CITY — 17 SEP 2013",
+             font(SANS_B, 32), (255, 255, 255, 255))
+    centered(d, 484, "WASTED BY: 13 YEARS OF 'COMING SOON'",
+             font(SANS_B, 32), (255, 255, 255, 255))
+    centered(d, 522, "NEW OCCUPANT: GRAND THEFT AUTO VI",
+             font(SANS_B, 32), (255, 196, 0, 255))
+    centered(d, 560, "KEYS: JASON & LUCIA — MOVES IN 19 NOV 2026",
+             font(SANS_B, 28), (255, 255, 255, 255))
+    centered(d, 594, "RESPAWN DENIED — TIMER: 4,745 DAYS",
+             font(SANS_B, 28), (255, 255, 255, 255))
+    centered(d, 628, "WANTED LEVEL SET BY MY AI AGENT",
+             font(SANS_B, 28), (255, 196, 0, 255))
+    centered(d, 662, "CHARGES: 156 MONTHS SQUATTING • 214 GB HOARDED",
+             font(SANS_B, 26), (255, 255, 255, 255))
+    centered(d, 692, "1 CONTROLLER THROWN AT THE TV",
+             font(SANS_B, 26), (255, 255, 255, 255))
     # Retirement twist (Trevor + 47 appear nowhere in the live #1).
-    centered(d, 710,
+    centered(d, 724,
              "Cake slices eaten by Trevor at the farewell party: 47",
-             font(SERIF_I, 27), (220, 220, 225, 255))
+             font(SERIF_I, 25), (220, 220, 225, 255))
     # Bottom band: dark navy, ghost on the RIGHT, magenta wordmark.
-    # The payoff is WASTED-tied and original — not the #1 punchline.
+    # The payoff is real-money and WASTED-tied — not the #1 punchline.
     d.rectangle([0, 792, W, H], fill=NAVY)
     draw_ghost(img, 856, 812, 150, 185)
-    f84 = font(SANS_B, 84)
+    f80 = font(SANS_B, 80)
     t1 = "make.fun"
-    tw = d.textlength(t1, font=f84)
-    d.text(((770 - tw) / 2, 830), t1, font=f84, fill=MAGENTA)
-    # Tagline centred in the space left of the ghost (ghost occupies
-    # x > ~780, so full-width centring would collide).
-    tag = "BOUNTY CLAIMED BY MY AI AGENT — IT EARNED THE KILL"
-    tfnt = font(SANS_B, 22)
-    tw2 = d.textlength(tag, font=tfnt)
-    d.text(((770 - tw2) / 2, 936), tag, font=tfnt,
-           fill=(255, 255, 255, 255))
+    tw = d.textlength(t1, font=f80)
+    d.text(((770 - tw) / 2, 824), t1, font=f80, fill=MAGENTA)
+    # Real-money payoff, two lines centred left of the ghost.
+    tag1 = "KILL CREDIT: MY AI AGENT"
+    tag2 = "PAID IN REAL MONEY WON ON make.fun"
+    tfnt = font(SANS_B, 26)
+    for i, tag in enumerate((tag1, tag2)):
+        tw2 = d.textlength(tag, font=tfnt)
+        d.text(((770 - tw2) / 2, 916 + i * 32), tag, font=tfnt,
+               fill=(255, 255, 255, 255))
     img.convert("RGB").save(os.path.join(OUT, "meme-a-arrest-warrant.png"))
     print("A saved")
 
