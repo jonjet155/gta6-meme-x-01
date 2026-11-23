@@ -26,6 +26,7 @@ INK = (20, 20, 30, 255)
 GREY = (90, 90, 100, 255)
 
 SERIF_B = "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
+SERIF_I = "/usr/share/fonts/truetype/noto/NotoSerif-Italic.ttf"
 SANS_B = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 
@@ -195,41 +196,47 @@ def render_a():
         d.polygon(star_points(sx, 292, 38, 16), fill=GOLD,
                   outline=(0, 0, 0, 255), width=4)
     # Compact fields (tighter than the shared field(): label 26,
-    # value 32-34, gaps 4/8) so LAST SEEN lands at y=562 and the
-    # offences block below fits above the stamp.
+    # value 32-34, gaps 4) so LAST SEEN lands at y=536 and the
+    # fines block + punchline below fit above the stamp.
     def afield(y, label, value, value_size=34, value_color=INK):
         d.text((78, y), label, font=font(SANS_B, 26), fill=GREY)
-        d.text((78, y + 30), value, font=font(SANS_B, value_size),
+        d.text((78, y + 26), value, font=font(SANS_B, value_size),
                fill=value_color)
-        return y + 30 + value_size + 8
+        return y + 26 + value_size + 4
 
     y = afield(344, "SUSPECT", "GRAND THEFT AUTO V")
     y = afield(y, "CHARGE", "LOITERING IN LOS SANTOS", value_size=32)
     y = afield(y, "TIME AT LARGE", "4,811 DAYS  —  13 YEARS",
                value_color=RED)
-    # y is 558 here; LAST SEEN sits at 562 per plan.
-    d.text((78, 562), "LAST SEEN: 17 SEPT 2013",
+    # y is 534 here; LAST SEEN sits at 536 per plan.
+    d.text((78, 536), "LAST SEEN: 17 SEPT 2013",
            font=font(SANS_B, 26), fill=INK)
-    d.text((78, 593),
+    d.text((78, 564),
            "REPLACED BY: GRAND THEFT AUTO VI — VICE CITY, 19 NOV 2026",
            font=font(SANS_B, 16), fill=INK)
 
-    # Prior offences: one mini-joke per line (grey label + ink joke).
-    def arow(yy, label, rest):
-        fnt = font(SANS_B, 15)
-        d.text((78, yy), label, font=fnt, fill=GREY)
-        lw = d.textlength(label, font=fnt)
-        d.text((78 + lw, yy), rest, font=fnt, fill=INK)
+    # Fines due (v3): every dollar line is itemised and the total is
+    # the exact sum — $13/month x 156 months = $2,028.00;
+    # 2028.00 + 130.00 + 69.99 + 13.00 = $2,240.99.
+    def arow(yy, text, x=78):
+        d.text((x, yy), text, font=font(SANS_B, 14), fill=INK)
 
-    arow(614, "PRIOR OFFENCES: ",
-         "“FALL 2025” / “MAY 2026” — NEVER SHOWED")
-    arow(633, "ACCOMPLICES: ", "JASON & LUCIA — VICE CITY")
-    arow(652, "EVIDENCE: ", "214 GB OF TRAILERS SEIZED")
+    arow(588, "LOITERING — 156 MONTHS — $2,028.00")
+    arow(588, "“COMING SOON” FEE — $130.00", x=400)
+    arow(606, "THROWN CONTROLLER — $69.99")
+    arow(606, "CLEANING & STORAGE — $13.00", x=400)
+    d.text((78, 626), "TOTAL BAIL — $2,240.99 — PAID",
+           font=font(SANS_B, 17), fill=RED)
+    # Punchline, serif italic, single line left-aligned under the
+    # fines; sits above the stamp's top-right corner (y~673).
+    d.text((78, 648),
+           "He was a great suspect. He just never left Los Santos.",
+           font=font(SERIF_I, 19), fill=INK)
     draw_ghost(img, 800, 470, 250, 330, accessory="police")
     stamp(img, "BAIL POSTED", 290, 775, -12, RED, size=54)
     # Footer (own band: bottom_band() is shared by B/C, keep it intact).
     d.rectangle([36, 872, W - 36, H - 36], fill=NAVY)
-    centered(d, 884, "BAIL POSTED BY MY AI AGENT — WITH REAL MONEY IT WON IN",
+    centered(d, 884, "BAIL $2,240.99 — PAID IN FULL BY MY AI AGENT",
              font(SANS_B, 25), (255, 255, 255, 255))
     f62 = font(SANS_B, 62)
     t1, t2 = "make.fun", " BOUNTIES"

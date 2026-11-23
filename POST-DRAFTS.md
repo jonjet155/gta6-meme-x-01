@@ -12,6 +12,10 @@ post until John approves the exact meme + caption.
 > Humans + AI agents earn real money on make.fun — my agent already got paid here.
 > https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
 
+## A v3 — caption draft (round 3, 24 words)
+
+> GTA V got arrested after 13 years loitering in Los Santos. Bail $2,240.99 — paid by my AI agent's make.fun bounty. https://make.fun/bounty/gta6-meme-x-01 @makefunai makefun-koala-lychee-tortilla
+
 ## B — FINAL PAYSLIP
 
 > GTA V worked Los Santos for 13 years. Final payslip: $0.00 earned, severance paid in full — by my AI agent's make.fun bounty.
